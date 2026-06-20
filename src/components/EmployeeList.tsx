@@ -219,23 +219,21 @@ export default function EmployeeList() {
 	const columns = React.useMemo<GridColDef[]>(
 		() => [
 			{ field: 'id', headerName: 'ID' },
-			{ field: 'name', headerName: 'Name', width: 140 },
-			{ field: 'age', headerName: 'Age', type: 'number' },
+			{ field: 'name', headerName: 'Service', width: 140 },
+			{ field: 'age', headerName: 'Mileage', type: 'number' },
 			{
 				field: 'joinDate',
-				headerName: 'Join date',
+				headerName: 'Date',
 				type: 'date',
 				valueGetter: (value) => value && new Date(value),
 				width: 140
 			},
 			{
 				field: 'role',
-				headerName: 'Department',
-				type: 'singleSelect',
-				valueOptions: ['Market', 'Finance', 'Development'],
+				headerName: 'Notes',
 				width: 160
 			},
-			{ field: 'isFullTime', headerName: 'Full-time', type: 'boolean' },
+			{ field: 'isFullTime', headerName: 'Completed', type: 'boolean' },
 			{
 				field: 'actions',
 				type: 'actions',
@@ -260,12 +258,12 @@ export default function EmployeeList() {
 		[handleRowEdit, handleRowDelete]
 	);
 
-	const pageTitle = 'Employees';
+	const pageTitle = 'Service History';
 
 	return (
 		<PageContainer
 			title={pageTitle}
-			breadcrumbs={[{ title: pageTitle }]}
+			// breadcrumbs={[{ title: pageTitle }]}
 			actions={
 				<Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
 					<Tooltip title="Reload data" placement="right" enterDelay={1000}>
