@@ -63,11 +63,11 @@ export default function DashboardLayout() {
 				menuOpen={isNavigationExpanded}
 				onToggleMenu={handleToggleHeaderMenu}
 			/>
-			<DashboardSidebar
+			{/* <DashboardSidebar
 				expanded={isNavigationExpanded}
 				setExpanded={setIsNavigationExpanded}
 				container={layoutRef?.current ?? undefined}
-			/>
+			/> */}
 			<Box
 				sx={{
 					display: 'flex',
