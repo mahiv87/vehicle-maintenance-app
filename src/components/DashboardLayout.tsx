@@ -59,7 +59,7 @@ export default function DashboardLayout() {
 		>
 			<DashboardHeader
 				logo={<Icon />}
-				title=""
+				title="Vehicle Maintenance"
 				menuOpen={isNavigationExpanded}
 				onToggleMenu={handleToggleHeaderMenu}
 			/>
