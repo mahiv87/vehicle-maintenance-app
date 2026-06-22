@@ -42,6 +42,20 @@ app.post('/api/records', async (req, res) => {
 	res.status(201).json(newRecord);
 });
 
+app.put('/api/records/:id', async (req, res) => {
+	const id = Number(req.params.id);
+
+	await records.updateOne({ id }, { $set: req.body });
+
+	const updated = await records.findOne({ id });
+	res.json(updated);
+});
+
+app.delete('/api/records/:id', async (req, res) => {
+	await records.deleteOne({ id: Number(req.params.id) });
+	res.status(204).send();
+});
+
 app.listen(process.env.PORT, () => {
 	console.log(`Server is running on port ${process.env.PORT}`);
 });
