@@ -8,6 +8,40 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+const client = new MongoClient(process.env.MONGO_URI!);
+await client.connect();
+
+const db = client.db(process.env.DB_NAME!);
+const records = db.collection('maintenanceRecords');
+
+app.get('/api/records', async (req, res) => {
+	const items = await records.find().sort({ id: 1 }).toArray();
+	res.json({ items, itemCount: items.length });
+});
+
+app.get('/api/records/:id', async (req, res) => {
+	const item = await records.findOne({ id: Number(req.params.id) });
+
+	if (!item) {
+		return res.status(404).json({ message: 'Record not found' });
+		return;
+	}
+
+	res.json(item);
+});
+
+app.post('/api/records', async (req, res) => {
+	const last = await records.find().sort({ id: -1 }).limit(1).toArray();
+
+	const newRecord = {
+		id: last[0]?.id + 1 || 1,
+		...req.body
+	};
+
+	await records.insertOne(newRecord);
+	res.status(201).json(newRecord);
+});
+
 app.listen(process.env.PORT, () => {
 	console.log(`Server is running on port ${process.env.PORT}`);
 });
