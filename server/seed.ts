@@ -25,6 +25,30 @@ const employees = [
 		joinDate: '2026-02-10T00:00:00.000Z',
 		role: 'Black Rhino BR005MX18855225, BFG KO3 LT265/65R18',
 		isFullTime: true
+	},
+	{
+		id: 4,
+		name: '4-Wheel Alignment',
+		age: 173469,
+		joinDate: '2026-02-2500:00:00.000Z',
+		role: 'Ellis Automotive',
+		isFullTime: true
+	},
+	{
+		id: 5,
+		name: 'Rotors/Brake Pads',
+		age: 174161,
+		joinDate: '2026-03-28T00:00:00.000Z',
+		role: 'Power Stop K6227',
+		isFullTime: true
+	},
+	{
+		id: 6,
+		name: 'Oil Change',
+		age: 176105,
+		joinDate: '2026-05-17T00:00:00.000Z',
+		role: 'Castrol Edge Full Synthetic 0W-20',
+		isFullTime: true
 	}
 ];
 
