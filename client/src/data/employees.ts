@@ -13,6 +13,15 @@ export interface Employee {
 	isFullTime: boolean;
 }
 
+export interface MaintenanceRecord {
+	id: number;
+	service: string;
+	mileage: number;
+	serviceDate: string;
+	notes: string;
+	completed: boolean;
+}
+
 const API_URL = '/api/records';
 
 export async function getMany({
