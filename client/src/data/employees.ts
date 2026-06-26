@@ -19,7 +19,7 @@ export interface MaintenanceRecord {
 	mileage: number;
 	serviceDate: string;
 	notes: string;
-	completed: boolean;
+	isCompleted: boolean;
 }
 
 const API_URL = '/api/records';
