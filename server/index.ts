@@ -13,7 +13,7 @@ async function startServer() {
 	await client.connect();
 
 	const db = client.db(process.env.DB_NAME!);
-	const records = db.collection('employees');
+	const records = db.collection('services');
 
 	app.get('/api/records', async (req, res) => {
 		const items = await records.find().sort({ id: 1 }).toArray();

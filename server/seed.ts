@@ -30,7 +30,7 @@ const services = [
 		id: 4,
 		service: '4-Wheel Alignment',
 		mileage: 173469,
-		serviceDate: '2026-02-2500:00:00.000Z',
+		serviceDate: '2026-02-25T00:00:00.000Z',
 		notes: 'Ellis Automotive',
 		isCompleted: true
 	},
@@ -59,12 +59,12 @@ async function seed() {
 		await client.connect();
 
 		const db = client.db(process.env.DB_NAME);
-		const collection = db.collection('employees');
+		const collection = db.collection('services');
 
 		await collection.deleteMany({});
 		await collection.insertMany(services);
 
-		console.log(`Seeded ${services.length} services`);
+		console.log(`Seeded ${services.length} service records`);
 	} finally {
 		await client.close();
 	}
