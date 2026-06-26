@@ -44,10 +44,16 @@ async function startServer() {
 
 	app.put('/api/records/:id', async (req, res) => {
 		const id = Number(req.params.id);
+		const { _id, id: bodyId, ...updateData } = req.body;
 
-		await records.updateOne({ id }, { $set: req.body });
+		await records.updateOne({ id }, { $set: updateData });
 
 		const updated = await records.findOne({ id });
+
+		if (!updated) {
+			return res.status(404).json({ message: 'Record not found' });
+		}
+
 		res.json(updated);
 	});
 

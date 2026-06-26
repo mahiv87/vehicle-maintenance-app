@@ -14,8 +14,8 @@ import EmployeeForm, {
 import PageContainer from './PageContainer';
 
 const INITIAL_FORM_VALUES: Partial<EmployeeFormState['values']> = {
-	role: 'Market',
-	isFullTime: true
+	notes: '',
+	isCompleted: false
 };
 
 export default function EmployeeCreate() {
