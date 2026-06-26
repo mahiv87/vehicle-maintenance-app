@@ -19,10 +19,10 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router';
 import dayjs, { Dayjs } from 'dayjs';
-import type { Employee } from '../data/employees';
+import type { Employee, MaintenanceRecord } from '../data/employees';
 
 export interface EmployeeFormState {
-	values: Partial<Omit<Employee, 'id'>>;
+	values: Partial<Omit<MaintenanceRecord, 'id'>>;
 	errors: Partial<Record<keyof EmployeeFormState['values'], string>>;
 }
 
@@ -145,38 +145,40 @@ export default function EmployeeForm(props: EmployeeFormProps) {
 				<Grid container spacing={2} sx={{ mb: 2, width: '100%' }}>
 					<Grid size={{ xs: 12, sm: 6 }} sx={{ display: 'flex' }}>
 						<TextField
-							value={formValues.name ?? ''}
+							value={formValues.service ?? ''}
 							onChange={handleTextFieldChange}
-							name="name"
-							label="Name"
-							error={!!formErrors.name}
-							helperText={formErrors.name ?? ' '}
+							name="service"
+							label="Service"
+							error={!!formErrors.service}
+							helperText={formErrors.service ?? ' '}
 							fullWidth
 						/>
 					</Grid>
 					<Grid size={{ xs: 12, sm: 6 }} sx={{ display: 'flex' }}>
 						<TextField
 							type="number"
-							value={formValues.age ?? ''}
+							value={formValues.mileage ?? ''}
 							onChange={handleNumberFieldChange}
-							name="age"
-							label="Age"
-							error={!!formErrors.age}
-							helperText={formErrors.age ?? ' '}
+							name="mileage"
+							label="Mileage"
+							error={!!formErrors.mileage}
+							helperText={formErrors.mileage ?? ' '}
 							fullWidth
 						/>
 					</Grid>
 					<Grid size={{ xs: 12, sm: 6 }} sx={{ display: 'flex' }}>
 						<LocalizationProvider dateAdapter={AdapterDayjs}>
 							<DatePicker
-								value={formValues.joinDate ? dayjs(formValues.joinDate) : null}
-								onChange={handleDateFieldChange('joinDate')}
-								name="joinDate"
-								label="Join date"
+								value={
+									formValues.serviceDate ? dayjs(formValues.serviceDate) : null
+								}
+								onChange={handleDateFieldChange('serviceDate')}
+								name="serviceDate"
+								label="Service Date"
 								slotProps={{
 									textField: {
-										error: !!formErrors.joinDate,
-										helperText: formErrors.joinDate ?? ' ',
+										error: !!formErrors.serviceDate,
+										helperText: formErrors.serviceDate ?? ' ',
 										fullWidth: true
 									}
 								}}
@@ -184,39 +186,31 @@ export default function EmployeeForm(props: EmployeeFormProps) {
 						</LocalizationProvider>
 					</Grid>
 					<Grid size={{ xs: 12, sm: 6 }} sx={{ display: 'flex' }}>
-						<FormControl error={!!formErrors.role} fullWidth>
-							<InputLabel id="employee-role-label">Department</InputLabel>
-							<Select
-								value={formValues.role ?? ''}
-								onChange={handleSelectFieldChange as SelectProps['onChange']}
-								labelId="employee-role-label"
-								name="role"
-								label="Department"
-								defaultValue=""
-								fullWidth
-							>
-								<MenuItem value="Market">Market</MenuItem>
-								<MenuItem value="Finance">Finance</MenuItem>
-								<MenuItem value="Development">Development</MenuItem>
-							</Select>
-							<FormHelperText>{formErrors.role ?? ' '}</FormHelperText>
-						</FormControl>
+						<TextField
+							value={formValues.notes ?? ''}
+							onChange={handleTextFieldChange}
+							name="notes"
+							label="Notes"
+							error={!!formErrors.notes}
+							helperText={formErrors.notes ?? ' '}
+							fullWidth
+						/>
 					</Grid>
 					<Grid size={{ xs: 12, sm: 6 }} sx={{ display: 'flex' }}>
 						<FormControl>
 							<FormControlLabel
-								name="isFullTime"
+								name="isCompleted"
 								control={
 									<Checkbox
 										size="large"
-										checked={formValues.isFullTime ?? false}
+										checked={formValues.isCompleted ?? false}
 										onChange={handleCheckboxFieldChange}
 									/>
 								}
-								label="Full-time"
+								label="Completed"
 							/>
-							<FormHelperText error={!!formErrors.isFullTime}>
-								{formErrors.isFullTime ?? ' '}
+							<FormHelperText error={!!formErrors.isCompleted}>
+								{formErrors.isCompleted ?? ' '}
 							</FormHelperText>
 						</FormControl>
 					</Grid>
