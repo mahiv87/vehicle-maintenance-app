@@ -32,7 +32,7 @@ export async function getMany({
 	paginationModel: GridPaginationModel;
 	sortModel: GridSortModel;
 	filterModel: GridFilterModel;
-}): Promise<{ items: Employee[]; itemCount: number }> {
+}): Promise<{ items: MaintenanceRecord[]; itemCount: number }> {
 	const params = new URLSearchParams({
 		page: String(paginationModel.page),
 		pageSize: String(paginationModel.pageSize),
@@ -49,8 +49,8 @@ export async function getMany({
 	return response.json();
 }
 
-export async function getOne(employeeId: number): Promise<Employee> {
-	const response = await fetch(`${API_URL}/${employeeId}`);
+export async function getOne(serviceId: number): Promise<MaintenanceRecord> {
+	const response = await fetch(`${API_URL}/${serviceId}`);
 
 	if (!response.ok) {
 		throw new Error('Record not found');
@@ -59,7 +59,9 @@ export async function getOne(employeeId: number): Promise<Employee> {
 	return response.json();
 }
 
-export async function createOne(data: Omit<Employee, 'id'>): Promise<Employee> {
+export async function createOne(
+	data: Omit<MaintenanceRecord, 'id'>
+): Promise<MaintenanceRecord> {
 	const response = await fetch(API_URL, {
 		method: 'POST',
 		headers: {
@@ -76,10 +78,10 @@ export async function createOne(data: Omit<Employee, 'id'>): Promise<Employee> {
 }
 
 export async function updateOne(
-	employeeId: number,
-	data: Partial<Omit<Employee, 'id'>>
-): Promise<Employee> {
-	const response = await fetch(`${API_URL}/${employeeId}`, {
+	serviceId: number,
+	data: Partial<Omit<MaintenanceRecord, 'id'>>
+): Promise<MaintenanceRecord> {
+	const response = await fetch(`${API_URL}/${serviceId}`, {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json'
@@ -94,8 +96,8 @@ export async function updateOne(
 	return response.json();
 }
 
-export async function deleteOne(employeeId: number): Promise<void> {
-	const response = await fetch(`${API_URL}/${employeeId}`, {
+export async function deleteOne(serviceId: number): Promise<void> {
+	const response = await fetch(`${API_URL}/${serviceId}`, {
 		method: 'DELETE'
 	});
 
@@ -105,31 +107,36 @@ export async function deleteOne(employeeId: number): Promise<void> {
 }
 
 type ValidationResult = {
-	issues: { message: string; path: (keyof Employee)[] }[];
+	issues: { message: string; path: (keyof MaintenanceRecord)[] }[];
 };
 
-export function validate(employee: Partial<Employee>): ValidationResult {
+export function validate(
+	maintenance: Partial<MaintenanceRecord>
+): ValidationResult {
 	let issues: ValidationResult['issues'] = [];
 
-	if (!employee.name) {
-		issues = [...issues, { message: 'Name is required', path: ['name'] }];
-	}
-
-	if (!employee.age) {
-		issues = [...issues, { message: 'Mileage is required', path: ['age'] }];
-	}
-
-	if (!employee.joinDate) {
+	if (!maintenance.service) {
 		issues = [
 			...issues,
-			{ message: 'Service date is required', path: ['joinDate'] }
+			{ message: 'Service name is required', path: ['service'] }
 		];
 	}
 
-	if (!employee.role) {
+	if (!maintenance.mileage) {
+		issues = [...issues, { message: 'Mileage is required', path: ['mileage'] }];
+	}
+
+	if (!maintenance.serviceDate) {
 		issues = [
 			...issues,
-			{ message: 'Parts/notes are required', path: ['role'] }
+			{ message: 'Service date is required', path: ['serviceDate'] }
+		];
+	}
+
+	if (!maintenance.notes) {
+		issues = [
+			...issues,
+			{ message: 'Parts/notes are required', path: ['notes'] }
 		];
 	}
 

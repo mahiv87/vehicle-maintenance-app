@@ -24,7 +24,7 @@ const router = createHashRouter([
 				Component: EmployeeList
 			},
 			{
-				path: '/employees/:employeeId',
+				path: '/employees/:serviceId',
 				Component: EmployeeShow
 			},
 			{
@@ -32,7 +32,7 @@ const router = createHashRouter([
 				Component: EmployeeCreate
 			},
 			{
-				path: '/employees/:employeeId/edit',
+				path: '/employees/:serviceId/edit',
 				Component: EmployeeEdit
 			},
 			// Fallback route for the example routes in dashboard sidebar items

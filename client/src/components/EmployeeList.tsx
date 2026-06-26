@@ -22,9 +22,10 @@ import { useLocation, useNavigate, useSearchParams } from 'react-router';
 import { useDialogs } from '../hooks/useDialogs/useDialogs';
 import useNotifications from '../hooks/useNotifications/useNotifications';
 import {
-	deleteOne as deleteEmployee,
-	getMany as getEmployees,
-	type Employee
+	deleteOne as deleteService,
+	getMany as getServices,
+	type Employee,
+	type MaintenanceRecord
 } from '../data/employees';
 import PageContainer from './PageContainer';
 
@@ -55,7 +56,7 @@ export default function EmployeeList() {
 	);
 
 	const [rowsState, setRowsState] = React.useState<{
-		rows: Employee[];
+		rows: MaintenanceRecord[];
 		rowCount: number;
 	}>({
 		rows: [],
@@ -127,7 +128,7 @@ export default function EmployeeList() {
 		setIsLoading(true);
 
 		try {
-			const listData = await getEmployees({
+			const listData = await getServices({
 				paginationModel,
 				sortModel,
 				filterModel
@@ -166,18 +167,18 @@ export default function EmployeeList() {
 	}, [navigate]);
 
 	const handleRowEdit = React.useCallback(
-		(employee: Employee) => () => {
-			navigate(`/employees/${employee.id}/edit`);
+		(service: MaintenanceRecord) => () => {
+			navigate(`/employees/${service.id}/edit`);
 		},
 		[navigate]
 	);
 
 	const handleRowDelete = React.useCallback(
-		(employee: Employee) => async () => {
+		(service: MaintenanceRecord) => async () => {
 			const confirmed = await dialogs.confirm(
-				`Do you wish to delete ${employee.name}?`,
+				`Do you wish to delete ${service.service}?`,
 				{
-					title: `Delete employee?`,
+					title: `Delete service?`,
 					severity: 'error',
 					okText: 'Delete',
 					cancelText: 'Cancel'
@@ -187,16 +188,16 @@ export default function EmployeeList() {
 			if (confirmed) {
 				setIsLoading(true);
 				try {
-					await deleteEmployee(Number(employee.id));
+					await deleteService(Number(service.id));
 
-					notifications.show('Employee deleted successfully.', {
+					notifications.show('Service deleted successfully.', {
 						severity: 'success',
 						autoHideDuration: 3000
 					});
 					loadData();
 				} catch (deleteError) {
 					notifications.show(
-						`Failed to delete employee. Reason:' ${(deleteError as Error).message}`,
+						`Failed to delete service. Reason:' ${(deleteError as Error).message}`,
 						{
 							severity: 'error',
 							autoHideDuration: 3000
@@ -219,21 +220,21 @@ export default function EmployeeList() {
 	const columns = React.useMemo<GridColDef[]>(
 		() => [
 			{ field: 'id', headerName: 'ID' },
-			{ field: 'name', headerName: 'Service', width: 140 },
-			{ field: 'age', headerName: 'Mileage', type: 'number' },
+			{ field: 'service', headerName: 'Service', width: 140 },
+			{ field: 'mileage', headerName: 'Mileage', type: 'number' },
 			{
-				field: 'joinDate',
+				field: 'serviceDate',
 				headerName: 'Date',
 				type: 'date',
 				valueGetter: (value) => value && new Date(value),
 				width: 140
 			},
 			{
-				field: 'role',
+				field: 'notes',
 				headerName: 'Notes',
 				width: 160
 			},
-			{ field: 'isFullTime', headerName: 'Completed', type: 'boolean' },
+			{ field: 'isCompleted', headerName: 'Completed', type: 'boolean' },
 			{
 				field: 'actions',
 				type: 'actions',
