@@ -99,7 +99,7 @@ function EmployeeEditForm({
 				autoHideDuration: 3000
 			});
 
-			navigate('/employees');
+			navigate('/services');
 		} catch (editError) {
 			notifications.show(
 				`Failed to edit service. Reason: ${(editError as Error).message}`,
@@ -119,7 +119,7 @@ function EmployeeEditForm({
 			onSubmit={handleFormSubmit}
 			onReset={handleFormReset}
 			submitButtonLabel="Save"
-			backButtonPath={`/employees/${serviceId}`}
+			backButtonPath={`/services/${serviceId}`}
 		/>
 	);
 }
@@ -192,8 +192,8 @@ export default function EmployeeEdit() {
 		<PageContainer
 			title={`Edit Service ${serviceId}`}
 			breadcrumbs={[
-				{ title: 'Services', path: '/employees' },
-				{ title: `Service ${serviceId}`, path: `/employees/${serviceId}` },
+				{ title: 'Services', path: '/services' },
+				{ title: `Service ${serviceId}`, path: `/services/${serviceId}` },
 				{ title: 'Edit' }
 			]}
 		>

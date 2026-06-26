@@ -20,19 +20,19 @@ const router = createHashRouter([
 		Component: DashboardLayout,
 		children: [
 			{
-				path: '/employees',
+				path: '/services',
 				Component: EmployeeList
 			},
 			{
-				path: '/employees/:serviceId',
+				path: '/services/:serviceId',
 				Component: EmployeeShow
 			},
 			{
-				path: '/employees/new',
+				path: '/services/new',
 				Component: EmployeeCreate
 			},
 			{
-				path: '/employees/:serviceId/edit',
+				path: '/services/:serviceId/edit',
 				Component: EmployeeEdit
 			},
 			// Fallback route for the example routes in dashboard sidebar items

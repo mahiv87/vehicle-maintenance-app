@@ -53,7 +53,7 @@ export default function EmployeeShow() {
 	}, [loadData]);
 
 	const handleEmployeeEdit = React.useCallback(() => {
-		navigate(`/employees/${serviceId}/edit`);
+		navigate(`/services/${serviceId}/edit`);
 	}, [navigate, serviceId]);
 
 	const handleEmployeeDelete = React.useCallback(async () => {
@@ -76,7 +76,7 @@ export default function EmployeeShow() {
 			try {
 				await deleteService(Number(serviceId));
 
-				navigate('/employees');
+				navigate('/services');
 
 				notifications.show('Employee deleted successfully.', {
 					severity: 'success',
@@ -96,7 +96,7 @@ export default function EmployeeShow() {
 	}, [service, dialogs, serviceId, navigate, notifications]);
 
 	const handleBack = React.useCallback(() => {
-		navigate('/employees');
+		navigate('/services');
 	}, [navigate]);
 
 	const renderShow = React.useMemo(() => {
@@ -217,7 +217,7 @@ export default function EmployeeShow() {
 		<PageContainer
 			title={pageTitle}
 			breadcrumbs={[
-				{ title: 'Services', path: '/employees' },
+				{ title: 'Services', path: '/services' },
 				{ title: pageTitle }
 			]}
 		>
